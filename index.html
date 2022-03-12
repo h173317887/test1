@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            box-sizing: border-box;
+            background-image: url('https://img2.baidu.com/it/u=2508772139,680455438&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=1082');
+            background-size: cover;
+
+        }
+
+
+        .container .mask {
+            position: absolute;
+            width: 100%;
+            height: 90%;
+            overflow: hidden;
+        }
+
+        .container span {
+            position: absolute;
+            color: #000;
+            white-space: nowrap;
+        }
+        .container .btn {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="mask">
+        </div>
+        <button class="btn">关闭/开启弹幕</button>
+    </div>
+    <script>
+        const data = [
+
+
+            {
+                content: '陈薇薇🐮啊啊',
+                time: 0
+            },
+            {
+                content: '陈薇薇666',
+                time: 0
+            },
+            {
+                content: '陈薇薇牛哇牛哇',
+                time: 1
+            },
+            {
+                content: '是感觉浪费的时间了',
+                time: 2
+            },
+            {
+                content: '是的发生率得分记录记录',
+                time: 2
+            },
+            {
+                content: '你好啊哈哈哈',
+                time: 3
+            },
+            {
+                content: '你好啊哈哈哈',
+                time: 3
+            },
+            {
+                content: '你好啊哈哈哈',
+                time: 4
+            },
+            {
+                content: '你好啊哈哈哈',
+                time: 4
+            },
+            {
+                content: '你好啊哈哈哈',
+                time: 5
+            },
+            {
+                content: '你好啊哈哈哈',
+                time: 5
+            },
+            {
+                content: '你好啊哈哈哈',
+                time: 5
+            },
+            {
+                content: '你好啊哈哈哈',
+                time: 6
+            },
+            {
+                content: '你好啊哈哈哈',
+                time: 6
+            },
+            {
+                content: '你好啊哈哈哈',
+                time: 6
+            }
+        ]
+        const container = document.querySelector('.mask');
+        const btn = document.querySelector('.btn');
+        const containerWidth = container.clientWidth;
+        const maxLine = 16;
+        const lineHeight = 30;
+        let currentLine = 0;
+        let timeout = 0;
+        let isOpen = true;
+        const duration = 15;
+        function createDanmu(content) {
+            const danmuItem = document.createElement('span');
+            danmuItem.innerText = content;
+            danmuItem.style.left = containerWidth + 'px';
+            danmuItem.style.top = currentLine * lineHeight + 'px';
+            danmuItem.speed = getRandomSpeed(100, 301);
+            danmuItem.selfLeft = containerWidth;
+            container.appendChild(danmuItem);
+            danmuItem.selfWidth = danmuItem.clientWidth;
+            currentLine = (currentLine + 1) % maxLine;
+        }
+
+        function getRandomSpeed(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        function startMove() {
+            if (timeout) return;
+            timeout = setInterval(() => {
+                for (let i = 0; i < container.children.length; i++) {
+                    const danmuItem = container.children[i];
+                    danmuItem.selfLeft -= danmuItem.speed / 1000 * duration;
+                    danmuItem.style.left = danmuItem.selfLeft + 'px';
+                    if (danmuItem.selfLeft < -(danmuItem.selfWidth)) {
+                        danmuItem.remove();
+                        i--;
+                    }
+                }
+            }, duration)
+        }
+
+        function generateDanmu(arr) {
+            let str = '陈薇薇🐮！简直是';
+            for (const key in obj) {
+                const index = getRandomSpeed(0, obj[key].length);
+                str += obj[key][index];
+            }
+            createDanmu(str);
+        }
+        setInterval(() => {
+            generateDanmu();
+        }, 500)
+        startMove()
+        btn.onclick = function () {
+            isOpen = !isOpen;
+            if (!isOpen) {
+                console.log(99)
+                clearInterval(timeout);
+                timeout = null;
+                return;
+            }
+            startMove();
+            return;
+        }
+
+        const arr1 = [
+            "开朗",
+            "大方",
+            "主动",
+            "外向",
+            "俏皮 ",
+            "敏捷 ",
+            "乐观 ",
+            "调皮",
+            " 爽脆",
+            " 爽朗 ",
+            "豪爽",
+            "善良", "纯洁", "活泼", "开朗", "天真", "率直", "含羞", "腼腆"
+        ];
+        const arr2 = [
+            "正直",
+            " 直率",
+            " 直爽",
+            " 干脆",
+            " 直言",
+            " 爽直",
+            " 刚直 ",
+            "憨直",
+            " 耿直 ",
+            "公正",
+            " 公道",
+            " 公平",
+            " 公允",
+            "正派",
+            " 爽快",
+            " 简捷 ",
+            "开阔",
+            " 豁达 ",
+            "明朗",
+            " 真诚",
+            " 热诚",
+            " 至诚",
+            " 赤诚",
+            " 诚挚",
+            " 恳切 ",
+            "纯真",
+            " 坦率"
+        ]
+        const arr3 = [
+            "笃实热忱",
+            " 热诚 热心",
+            " 好客 ",
+            "客气 ",
+            "殷勤",
+            " 和气",
+            " 和蔼",
+            " 和善",
+            " 和婉",
+            " 和悦 ",
+            "和易",
+            " 亲切",
+            " 过谦",
+            " 谦卑",
+            " 谦恭",
+            " 谦和 ",
+            "谦让",
+            " 谦虚",
+            " 谦逊",
+            " 虚心"
+        ]
+        const arr6 = [
+            "完美无缺", "空前绝后", "万古流芳",
+            "花见花开", "美貌如花", "天仙下凡", "楚楚动人",
+            "天生丽质", "慧质兰心", "秀外慧中", "暗香盈袖"
+        ];
+        const arr5 = [
+            "自谦强硬",
+            " 强悍",
+            " 强劲",
+            " 坚决",
+            " 坚信",
+            " 坚定",
+            " 坚韧 ",
+            "坚实",
+            " 坚毅",
+            " 坚贞",
+            " 中坚",
+            " 毅力"
+        ]
+        const arr4 = [
+            "勇敢",
+            " 勇猛",
+            " 刚毅",
+            " 果敢 ",
+            "果决",
+            " 坚毅",
+            " 坚强",
+            " 坚忍",
+            " 决然",
+            " 毅然"
+        ]
+        const arr7 = [
+            "花容月貌",
+            "貌美如花",
+            "闭月羞花",
+            "英俊潇洒",
+            "玉树临风",
+            "聪明绝顶",
+            "冰雪聪明",
+            "活泼开朗"
+        ]
+
+        const obj = {
+            arr1,
+            arr2,
+            arr3,
+            arr4,
+            arr5,
+            arr6,
+            arr7
+        }
+
+    </script>
+</body>
+
+</html>
